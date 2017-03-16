@@ -35,7 +35,7 @@ function getAllTransearch(req, res, next) {
 function getSingleCountyExport(req, res, next) {
   console.log(req.params.id)
 
-  db.any('SELECT * FROM "2012_Transearch" WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\'',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue") as value,sum("Total_Annual_tons") as tons,"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -53,7 +53,7 @@ function getSingleCountyExport(req, res, next) {
 function getSingleCountyExportTons(req, res, next) {
   console.log(req.params.id)
 
-  db.any('SELECT "STCC2",sum("Total_Annual_tons")  FROM "2012_Transearch" WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "STCC2" ORDER BY "STCC2"',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("Total_Annual_tons"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -71,7 +71,7 @@ function getSingleCountyExportTons(req, res, next) {
 function getSingleCountyExportValue(req, res, next) {
   console.log(req.params.id)
 
-  db.any('SELECT "STCC2",sum("SumOfValue")  FROM "2012_Transearch" WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "STCC2" ORDER BY "STCC2"',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -86,10 +86,10 @@ function getSingleCountyExportValue(req, res, next) {
       return next(err);
     });
 }
+
 function getSingleCountyImport(req, res, next) {
   console.log(req.params.id)
-
-  db.any('SELECT * FROM "2012_Transearch" WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' LIMIT 10',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue") as value,sum("Total_Annual_tons") as tons,"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -106,8 +106,7 @@ function getSingleCountyImport(req, res, next) {
 }
 function getSingleCountyImportTons(req, res, next) {
   console.log(req.params.id)
-
-  db.any('SELECT "STCC2",sum("Total_Annual_tons")  FROM "2012_Transearch" WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "STCC2" ORDER BY "STCC2"',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("Total_Annual_tons"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -125,7 +124,7 @@ function getSingleCountyImportTons(req, res, next) {
 function getSingleCountyImportValue(req, res, next) {
   console.log(req.params.id)
 
-  db.any('SELECT "STCC2",sum("SumOfValue")  FROM "2012_Transearch" WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "STCC2" ORDER BY "STCC2"',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
