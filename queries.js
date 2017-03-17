@@ -35,7 +35,7 @@ function getAllTransearch(req, res, next) {
 function getSingleCountyExport(req, res, next) {
   console.log(req.params.id)
 
-  db.any('select "PROPER", "2012_Transearch"."STCC2", sum("SumOfValue") as value,  sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
+  db.any('select "PROPER","Origin_County_Name", "2012_Transearch"."STCC2", sum("SumOfValue") as value,  sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -53,7 +53,7 @@ function getSingleCountyExport(req, res, next) {
 function getSingleCountyExportTons(req, res, next) {
   console.log(req.params.id)
 
-  db.any('select "PROPER", "2012_Transearch"."STCC2", sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
+  db.any('select "PROPER","Origin_County_Name", "2012_Transearch"."STCC2", sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -71,7 +71,7 @@ function getSingleCountyExportTons(req, res, next) {
 function getSingleCountyExportValue(req, res, next) {
   console.log(req.params.id)
 
-  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -89,7 +89,7 @@ function getSingleCountyExportValue(req, res, next) {
 
 function getSingleCountyImport(req, res, next) {
   console.log(req.params.id)
-  db.any('select "PROPER", "2012_Transearch"."STCC2", sum("SumOfValue") as value,  sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
+  db.any('select "PROPER","Origin_County_Name", "2012_Transearch"."STCC2", sum("SumOfValue") as value,  sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -106,7 +106,7 @@ function getSingleCountyImport(req, res, next) {
 }
 function getSingleCountyImportTons(req, res, next) {
   console.log(req.params.id)
-  db.any('select "PROPER", "2012_Transearch"."STCC2", sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
+  db.any('select "PROPER","Origin_County_Name", "2012_Transearch"."STCC2", sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -124,7 +124,7 @@ function getSingleCountyImportTons(req, res, next) {
 function getSingleCountyImportValue(req, res, next) {
   console.log(req.params.id)
 
-  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"',{
+  db.any('SELECT "2012_Transearch"."STCC2",sum("SumOfValue"),"PROPER" FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text  WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
     countyFips: req.params.id
   })
     .then(function (data) {
@@ -139,7 +139,7 @@ function getSingleCountyImportValue(req, res, next) {
       return next(err);
     });
 }
-'select "PROPER", "2012_Transearch"."STCC2", sum("SumOfValue") as value,  sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER" ORDER BY "2012_Transearch"."STCC2"'
+'select "PROPER","Origin_County_Name", "2012_Transearch"."STCC2", sum("SumOfValue") as value,  sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"'
 module.exports = {
   getAllTransearch: getAllTransearch,
   getSingleCountyExport: getSingleCountyExport,
