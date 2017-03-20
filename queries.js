@@ -140,6 +140,83 @@ function getSingleCountyImportValue(req, res, next) {
     });
 }
 
+function getSingleCountyExportDestination(req, res, next) {
+  console.log(req.params.id)
+
+  db.any('select "Origin_County_Name", "Destination_County_Name","Destination_County_FIPS_Code", sum("SumOfValue") as value, sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' AND substring("Destination_County_FIPS_Code" from 0 for 3) = \'36\' GROUP BY "Destination_County_FIPS_Code","Destination_County_Name","Origin_County_Name" ORDER BY "Destination_County_FIPS_Code"',{
+    countyFips: req.params.id
+  })
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved single county. ORIGIN FIPS: '+req.params.id
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function getSingleCountyExportDestinationDetails(req, res, next) {
+  console.log(req.params.id)
+
+  db.any('select "PROPER","Origin_County_Name", "Destination_County_Name","Destination_County_FIPS_Code","2012_Transearch"."STCC2",sum("SumOfValue") as value, sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Origin_County_FIPS_Code"=\'${countyFips^}\' AND substring("Destination_County_FIPS_Code" from 0 for 3) = \'36\' GROUP BY "2012_Transearch"."STCC2","PROPER","Destination_County_FIPS_Code","Destination_County_Name","Origin_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
+    countyFips: req.params.id
+  })
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved single county. ORIGIN FIPS: '+req.params.id
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function getSingleCountyImportOriginDetails(req, res, next) {
+  console.log(req.params.id)
+
+  db.any('select "PROPER","Destination_County_Name", "Origin_County_Name","Origin_County_FIPS_Code","2012_Transearch"."STCC2", sum("SumOfValue") as value,sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' AND substring("Origin_County_FIPS_Code" from 0 for 3) = \'36\' GROUP BY "2012_Transearch"."STCC2","PROPER","Origin_County_FIPS_Code","Origin_County_Name","Destination_County_Name" ORDER BY "2012_Transearch"."STCC2"',{
+    countyFips: req.params.id
+  })
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved single county. ORIGIN FIPS: '+req.params.id
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function getSingleCountyImportOrigin(req, res, next) {
+  console.log(req.params.id)
+
+  db.any('select "Destination_County_Name", "Origin_County_Name","Origin_County_FIPS_Code",sum("SumOfValue") as value, sum("Total_Annual_tons") as tons, sum("Air_Annual_tons") as air, sum("Water_Annual_tons") as water, sum("Other_Annual_tons") as other, sum("Rail_Carload_Annual_tons") as rail_carload, sum("Rail_Intermodal_Annual_tons") as rail_intermodal, sum("For_Hire_Truckload_Annual_tons") as truck_for_hire, sum("For_Hire_LTL_Annual_tons") as ltl_for_hire, sum("Private_Truck_Annual_tons") as truck_private FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text WHERE "Destination_County_FIPS_Code"=\'${countyFips^}\' AND substring("Origin_County_FIPS_Code" from 0 for 3) = \'36\' GROUP BY "Origin_County_FIPS_Code","Origin_County_Name","Destination_County_Name" ORDER BY "Origin_County_Name"',{
+    countyFips: req.params.id
+  })
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved single county. ORIGIN FIPS: '+req.params.id
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+
 module.exports = {
   getAllTransearch: getAllTransearch,
   getSingleCountyExport: getSingleCountyExport,
@@ -147,8 +224,9 @@ module.exports = {
   getSingleCountyExportValue: getSingleCountyExportValue,
   getSingleCountyImport: getSingleCountyImport,
   getSingleCountyImportTons: getSingleCountyImportTons,
-  getSingleCountyImportValue: getSingleCountyImportValue
-  // createPuppy: createPuppy,
-  // updatePuppy: updatePuppy,
-  // removePuppy: removePuppy
+  getSingleCountyImportValue: getSingleCountyImportValue,
+  getSingleCountyExportDestinationDetails:getSingleCountyExportDestinationDetails,
+  getSingleCountyImportOriginDetails:getSingleCountyImportOriginDetails,
+  getSingleCountyExportDestination:getSingleCountyExportDestination,
+  getSingleCountyImportOrigin:getSingleCountyImportOrigin  
 };

@@ -11,6 +11,10 @@ router.get('/api/counties/import/:id', db.getSingleCountyImport);
 router.get('/api/counties/import/tons/:id', db.getSingleCountyImportTons);
 router.get('/api/counties/import/value/:id', db.getSingleCountyImportValue);
 
+router.get('/api/counties/export/destination/details/:id',db.getSingleCountyExportDestinationDetails);
+router.get('/api/counties/import/origin/details/:id',db.getSingleCountyImportOriginDetails);
+router.get('/api/counties/export/destination/:id',db.getSingleCountyExportDestination);
+router.get('/api/counties/import/origin/:id',db.getSingleCountyImportOrigin);
 // router.post('/api/puppies', db.createPuppy);
 // router.put('/api/puppies/:id', db.updatePuppy);
 // router.delete('/api/puppies/:id', db.removePuppy);
