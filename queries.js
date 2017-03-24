@@ -216,6 +216,30 @@ function getSingleCountyImportOrigin(req, res, next) {
     });
 }
 
+function getExportsFromSingleToSingle(req, res, next) {
+  console.log(req.params.originFips,req.params.destinationFips)
+
+  db.any('select  "PROPER", "2012_Transearch"."STCC2", "Destination_County_Name",  "Destination_County_FIPS_Code", "Origin_County_Name", "Origin_County_FIPS_Code", sum("SumOfValue") as value,  sum("Total_Annual_tons") as tons,   sum("Air_Annual_tons") as air,   sum("Water_Annual_tons") as water,   sum("Other_Annual_tons") as other,   sum("Rail_Carload_Annual_tons") as rail_carload,   sum("Rail_Intermodal_Annual_tons") as rail_intermodal,   sum("For_Hire_Truckload_Annual_tons") as truck_for_hire,   sum("For_Hire_LTL_Annual_tons") as ltl_for_hire,   sum("Private_Truck_Annual_tons") as truck_private   FROM "2012_Transearch" INNER JOIN  "Stcc2DNames" ON "2012_Transearch"."STCC2" = "Stcc2DNames"."STCC2"::text   WHERE "Destination_County_FIPS_Code"=\'${destinationFips^}\'  AND "Origin_County_FIPS_Code" = \'${originFips^}\'  GROUP BY "2012_Transearch"."STCC2","PROPER","Destination_County_FIPS_Code","Destination_County_Name","Origin_County_FIPS_Code","Origin_County_Name"  ORDER BY "Origin_County_Name"',{
+    originFips: req.params.originFips,
+    destinationFips:req.params.destinationFips
+  })
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved exports from single to single county. ORIGIN FIPS: '+req.params.originFips+ ' DESTINATION: '+req.params.destinationFips
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+
+
+ 
+
 
 module.exports = {
   getAllTransearch: getAllTransearch,
@@ -228,5 +252,6 @@ module.exports = {
   getSingleCountyExportDestinationDetails:getSingleCountyExportDestinationDetails,
   getSingleCountyImportOriginDetails:getSingleCountyImportOriginDetails,
   getSingleCountyExportDestination:getSingleCountyExportDestination,
-  getSingleCountyImportOrigin:getSingleCountyImportOrigin  
+  getSingleCountyImportOrigin:getSingleCountyImportOrigin,
+  getExportsFromSingleToSingle:getExportsFromSingleToSingle
 };

@@ -15,6 +15,9 @@ router.get('/api/counties/export/destination/details/:id',db.getSingleCountyExpo
 router.get('/api/counties/import/origin/details/:id',db.getSingleCountyImportOriginDetails);
 router.get('/api/counties/export/destination/:id',db.getSingleCountyExportDestination);
 router.get('/api/counties/import/origin/:id',db.getSingleCountyImportOrigin);
+
+router.get('/api/counties/export/:originFips/:destinationFips',db.getExportsFromSingleToSingle);
+
 // router.post('/api/puppies', db.createPuppy);
 // router.put('/api/puppies/:id', db.updatePuppy);
 // router.delete('/api/puppies/:id', db.removePuppy);
