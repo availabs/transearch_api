@@ -4,7 +4,6 @@ var options = {
   // Initialization Options
   promiseLib: promise
 };
-
 var cn = {
     host: 'mars.availabs.org', // server name or IP address;
     port: 5432,
@@ -12,9 +11,7 @@ var cn = {
     user: 'postgres',
     password: 'Jedi21funk'
 }
-
 var pgp = require('pg-promise')(options);
-//var connectionString = 'postgres://mars.availabs.org:5432/transearch_2012';
 var db = pgp(cn);
 
 // add query functions
@@ -113,7 +110,6 @@ function getSingleCountyImportOrigin(req, res, next) {
       return next(err);
     });
 }
-
 function getSingleCountyExportDestination(req, res, next) {
   var beaConditional = ''
   if(req.params.id.length < 5){
@@ -167,7 +163,6 @@ function getSingleCountyImportOriginDetails(req, res, next) {
       return next(err);
     });
 }
-
 function getSingleCountyExportDestinationDetails(req, res, next) {
   var beaConditional = ''
   if(req.params.id.length < 5){
@@ -217,10 +212,6 @@ function getExportsFromSingleToSingle(req, res, next) {
       return next(err);
     });
 }
-
-
-
-
 
 module.exports = {
   getAllTransearch: getAllTransearch,

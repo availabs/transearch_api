@@ -16,10 +16,6 @@ router.get('/api/counties/export/destination/details/:id',db.getSingleCountyExpo
 
 router.get('/api/counties/export/:originFips/:destinationFips',db.getExportsFromSingleToSingle);
 
-// router.post('/api/puppies', db.createPuppy);
-// router.put('/api/puppies/:id', db.updatePuppy);
-// router.delete('/api/puppies/:id', db.removePuppy);
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
